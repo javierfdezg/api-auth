@@ -11,7 +11,7 @@ var path = require('path');
 module.exports = exports = {
   appName: 'apiauth',
   appDir: path.normalize(__dirname + '/../../'),
-  httpp: process.env.port || 3000, // https port
+  httpp: 3000, // https port
   httpsp: 3001, // https port
   maxLag: 200, // Too Busy max lag (ms)
   cookiesSecret: "-WNSScrt_123.::;109",

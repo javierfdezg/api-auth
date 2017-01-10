@@ -41,8 +41,10 @@ app.use(getCustomerMiddleware);
 
 require('./config/routes')(app, config);
 
-app.listen(config.httpp, function() {
-  winston.info('%s: Node server started on %s ...', Date(Date.now() ), config.httpp);
+var port = process.env.PORT || config.httpp;
+
+app.listen(port, function() {
+  winston.info('%s: Node server started on %s ...', Date(Date.now() ), port);
 });
 
 // process event handlers
