@@ -1,8 +1,5 @@
 /*
- * Reimpacto
- *
- * Copyright (c) 2014 Why Not Soluciones, S.L.
- * Licensed under the Copyright license.
+ * Copyright (c) inSided BV
  */
 
 /*jslint node: true */
@@ -74,7 +71,7 @@ module.exports = function (grunt) {
 
     nodemon: {
       dev: {
-        script: 'src/app.js',
+        script: 'src/index.js',
         options: {
           cwd: __dirname,
           ignore: ['README.md'],
