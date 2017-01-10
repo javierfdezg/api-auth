@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "grunt"
+    "start": "npm install && grunt",
+    ebstart: "node index.js"
   },
   "author": "",
   "license": "ISC",
