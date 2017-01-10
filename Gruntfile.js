@@ -16,8 +16,8 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     config: {
-      httpp: 4000, // http port
-      httpsp: 4001, // https port
+      httpp: 3000, // http port
+      httpsp: 3001, // https port
       database: {
         name: 'api',
         host: '127.0.0.1'
