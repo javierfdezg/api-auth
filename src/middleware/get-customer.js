@@ -9,6 +9,8 @@ function getCustomer (req, res, next) {
       message: 'Yip Id not found'
     };
   }
+
+  req.customer = customer;
   next(err);
 }
 
