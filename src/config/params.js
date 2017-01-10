@@ -9,7 +9,7 @@
 var path = require('path');
 
 module.exports = exports = {
-  appName: 'api-auth',
+  appName: 'apiauth',
   appDir: path.normalize(__dirname + '/../../'),
   httpp: process.env.port || 3000, // https port
   httpsp: 3001, // https port

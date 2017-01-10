@@ -66,6 +66,43 @@ module.exports = function (grunt) {
       },
       createUser: {
         command: 'node scripts/add-user.js -c "<%= config.createUser %>" -n "<%= config.user.fullName %>" -p "<%= config.user.password %>" -e "<%= config.user.email %>"'
+      },
+      ebGetLastVersion: {
+        command: 'echo `git fetch && git tag | sort -t. -k1,1n -k2,2n -k 3,3n | tail -1` > version',
+        options: {
+          async: false,
+        }
+      },
+      ebZipSrc: {
+        command: 'zip -r -X ../deploy-versions/`cat ../version`.zip *',
+        options: {
+          async: false,
+          execOptions: {
+            cwd: 'src/'
+          }
+        }
+      },
+      ebZipPackageJson: {
+        command: 'zip -r deploy-versions/`cat version`.zip package.json',
+        options: {
+          async: false
+        }
+      },
+      ebZipEbextensions: {
+        command: 'zip -r ../deploy-versions/`cat ../version`.zip .ebextensions',
+        options: {
+          async: false,
+          execOptions: {
+            cwd: 'ebs-nodejs-skel/'
+          }
+        }
+      },
+      ebZipVersion: {
+        command: 'zip -r -X deploy-versions/`cat version`.zip version',
+        options: {
+          async: false,
+
+        }
       }
     },
 
@@ -81,6 +118,12 @@ module.exports = function (grunt) {
           legacyWatch: true
         }
       }
+    },
+
+    clean: {
+      dist: ['web/development/js/dist/'],
+      dsStore: ['*/**/.DS_Store'],
+      version: ['version']
     },
 
     prompt: {
@@ -180,5 +223,7 @@ module.exports = function (grunt) {
 
   // Test
   grunt.registerTask('test', ['shell:test']);
+
+  grunt.registerTask('deploy', ['clean:dsStore', 'shell:ebGetLastVersion', 'shell:ebZipSrc', 'shell:ebZipPackageJson', 'shell:ebZipEbextensions', 'shell:ebZipVersion', 'clean:version']);
 
 };
