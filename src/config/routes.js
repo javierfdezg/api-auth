@@ -102,9 +102,9 @@ module.exports = function (app, config) {
   // Error handling
   app.use(function (err, req, res, next) {
     // Timeout
-    if (err && err.status == 503) {
-      winston.warn("[API TIMEOUT ERROR] %s -- %s %s", req.ip, req.method, req.path);
-      res.status(503).json({result: 'Timeout'});
+    if (err) {
+      winston.warn("[API ERROR] %s -- %s %s %s", req.ip, req.method, req.path, err.status);
+      res.status(err.status).json({result: err.message});
     }
     // Unexpected exception handling
     else if (err) {
