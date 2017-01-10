@@ -2,3 +2,4 @@ dmconfig.json
 node_modules
 src/npm-debug.log 
 deploy-versions/*
+log

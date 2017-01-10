@@ -24,6 +24,9 @@ app = express();
 app.disable('x-powered-by');
 
 // Logging config
+if (!fs.existsSync(config.logging.directory)) {
+  fs.mkdirSync(config.logging.directory, '0755');
+}
 require('./config/logging')(app, config);
 
 app.use(getCustomerMiddleware);
