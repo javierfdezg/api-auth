@@ -14,7 +14,9 @@ var app, winston = require('winston'),
     defaults: defaults,
     prefix: defaults.appName
   }),
-  fs = require('fs'),
+  fs = require('fs');
+
+var getCustomerMiddleware = require('./middleware/get-customer');
 
 app = express();
 
@@ -23,6 +25,8 @@ app.disable('x-powered-by');
 
 // Logging config
 require('./config/logging')(app, config);
+
+app.use(getCustomerMiddleware);
 
 // ==============================================================
 // Routes for API & static resources middleware config.
