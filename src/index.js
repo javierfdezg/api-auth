@@ -44,7 +44,7 @@ require('./config/routes')(app, config);
 var port = process.env.PORT || config.httpp;
 
 app.listen(port, function() {
-  winston.info('%s: Node server started on %s ...', Date(Date.now() ), port);
+  winston.info('%s: Node server started on %s ...', Date(Date.now() ), port);
 });
 
 // process event handlers
