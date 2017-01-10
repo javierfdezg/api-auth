@@ -6,12 +6,30 @@
 /*jshint -W030 */
 'use strict';
 
-function get (req, res) {
-  res.status(406).send('Not implemented');
+var Config = require('../models/config');
+
+function get (req, res, next) {
+  Config.findByCustomer(req.customer).then(function (config) {
+    if (!config) {
+      return res.status(404).json();
+    }
+    res.json(config);
+  }).catch(next);
 }
 
-function post (req, res) {
-  res.status(406).send('Not implemented');
+function post (req, res, next) {
+  var customer = req.customer;
+  var strategies = req.body.strategies;
+  var config = new Config();
+  config.yip_id = customer;
+  Config.validateStrategies(strategies).then(function (strategies) {
+    config.strategies = strategies;
+    return config.save();
+  }).then(function (config) {
+    res.json(config);
+  }).catch(function (err) {
+    res.status(400).json(err);
+  });
 }
 
 function put (req, res) {

@@ -7,6 +7,8 @@
 "use strict";
 
 var app, winston = require('winston'),
+  mongoose = require('mongoose'),
+  Promise = require('bluebird'),
   express = require('express'),
   envConfig = require('node-env-configuration'),
   defaults = require('./config/params'),
@@ -14,9 +16,14 @@ var app, winston = require('winston'),
     defaults: defaults,
     prefix: defaults.appName
   }),
+  mongoConnection = require('./config/mongo')(config.data),
   fs = require('fs');
 
 var getCustomerMiddleware = require('./middleware/get-customer');
+
+mongoose.Promise = Promise;
+
+mongoose.connect(mongoConnection);
 
 app = express();
 

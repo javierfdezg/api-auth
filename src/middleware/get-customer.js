@@ -11,6 +11,7 @@ function getCustomer (req, res, next) {
   }
 
   req.customer = customer;
+
   next(err);
 }
 
