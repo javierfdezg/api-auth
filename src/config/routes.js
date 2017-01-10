@@ -22,6 +22,8 @@ module.exports = function (app, config) {
   var router = express.Router();
   var authRouter = express.Router();
   var configRouter = express.Router();
+  var getCustomerMiddleware = require('../middleware/get-customer');
+
 
   // -------- Controllers ------
   var authController = require('../controllers/auth');
@@ -39,14 +41,15 @@ module.exports = function (app, config) {
   // Add X-Response-Time header (response time) in every response
   app.use(responseTime());
 
-  // Body parser
   authRouter.use(bodyParser.json());
+  authRouter.use(getCustomerMiddleware);
 
   // --------------------------- AUTH SERVICES ----------------------------
   authRouter.get('/facebook', timeout(5000), passport.authenticate('facebook', {scope: 'email'}));
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());
+  configRouter.use(getCustomerMiddleware);
 
   // --------------------------- CONFIG SERVICES ----------------------------
   configRouter.get('/', timeout(5000), configController.get);

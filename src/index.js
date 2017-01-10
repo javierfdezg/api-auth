@@ -19,8 +19,6 @@ var app, winston = require('winston'),
   mongoConnection = require('./config/mongo')(config.data),
   fs = require('fs');
 
-var getCustomerMiddleware = require('./middleware/get-customer');
-
 mongoose.Promise = Promise;
 
 mongoose.connect(mongoConnection);
@@ -32,8 +30,6 @@ app.disable('x-powered-by');
 
 // Logging config
 require('./config/logging')(app, config);
-
-app.use(getCustomerMiddleware);
 
 // ==============================================================
 // Routes for API & static resources middleware config.
