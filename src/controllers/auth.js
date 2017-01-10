@@ -4,7 +4,7 @@
 
 /*jslint node: true */
 /*jshint -W030 */
-"use strict";
+'use strict';
 
 /**
  * Get a specific Business Unit from catalog by id

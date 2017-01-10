@@ -7,6 +7,7 @@
 "use strict";
 
 var express = require('express'),
+  passport = require('passport'),
   winston = require('winston'),
   timeout = require('connect-timeout'),
   toobusy = require('toobusy-js'),
@@ -19,9 +20,12 @@ var express = require('express'),
 module.exports = function (app, config) {
 
   var router = express.Router();
+  var authRouter = express.Router();
+  var configRouter = express.Router();
 
   // -------- Controllers ------
   var authController = require('../controllers/auth');
+  var configController = require('../controllers/config');
   // Require here your api controllers
 
   // -------- Routes --------
@@ -36,10 +40,19 @@ module.exports = function (app, config) {
   app.use(responseTime());
 
   // Body parser
-  router.use(bodyParser.json());
+  authRouter.use(bodyParser.json());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  router.get('/', timeout(2000), authController.get);
+  authRouter.get('/facebook', timeout(5000), passport.authenticate('facebook', {scope: 'email'}));
+  // ----------------------------------------------------------------------
+
+  configRouter.use(bodyParser.json());
+
+  // --------------------------- CONFIG SERVICES ----------------------------
+  configRouter.get('/', timeout(5000), configController.get);
+  configRouter.post('/', timeout(5000), configController.post);
+  configRouter.put('/', timeout(5000), configController.put);
+  configRouter['delete']('/', timeout(5000), configController.del);
   // ----------------------------------------------------------------------
 
   // --------------------------- SESSION SERVICES ----------------------------
@@ -70,6 +83,8 @@ module.exports = function (app, config) {
 
   // Main router
   app.use('/', router);
+  app.use('/', authRouter);
+  app.use('/config', configRouter);
 
   app.use(haltOnTimedout);
 
