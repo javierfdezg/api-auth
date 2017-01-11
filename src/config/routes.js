@@ -15,7 +15,8 @@ var express = require('express'),
   cors = require('cors'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  path = require('path');
+  path = require('path')
+	passport = require('passport');
 
 module.exports = function (app, config) {
 
@@ -28,6 +29,8 @@ module.exports = function (app, config) {
   // -------- Controllers ------
   var authController = require('../controllers/auth');
   var configController = require('../controllers/config');
+  var facebookController = require('../controllers/facebook');
+
   // Require here your api controllers
 
   // -------- Routes --------
@@ -43,9 +46,12 @@ module.exports = function (app, config) {
 
   authRouter.use(bodyParser.json());
   authRouter.use(getCustomerMiddleware);
+	authRouter.use(passport.initialize());
+	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/facebook', timeout(5000), passport.authenticate('facebook', {scope: 'email'}));
+  authRouter.get('/facebook/callback', timeout(5000), facebookController.callback);
+  authRouter.post('/facebook', timeout(5000), facebookController.authenticate);
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());
@@ -103,7 +109,7 @@ module.exports = function (app, config) {
   app.use(function (err, req, res, next) {
     // Timeout
     if (err) {
-      winston.warn("[API ERROR] %s -- %s %s %s", req.ip, req.method, req.path, err.status);
+      winston.warn("[API ERROR] %s -- %s %s %s", req.ip, req.method, req.path, JSON.stringify(err));
       res.status(err.status).json({result: err.message});
     }
     // Unexpected exception handling
