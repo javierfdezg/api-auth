@@ -26,7 +26,6 @@ module.exports = function (app, config) {
   var configRouter = express.Router();
   var getCustomerMiddleware = require('../middleware/get-customer');
 
-
   // -------- Controllers ------
   var authController = require('../controllers/auth');
   var configController = require('../controllers/config');
@@ -66,8 +65,8 @@ module.exports = function (app, config) {
 	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/facebook/callback', timeout(115000), facebookController.callback);
-  authRouter.get('/facebook', timeout(115000), facebookController.authenticate);
+  authRouter.get('/facebook/callback', timeout(5000), facebookController.callback);
+  authRouter.get('/facebook', timeout(5000), facebookController.authenticate);
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());

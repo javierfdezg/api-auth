@@ -22,5 +22,5 @@ exports.callback = function (req, res, next) {
 	passport.authenticate('facebook', function(err, user, info) {
 		winston.debug(arguments);
 		res.send('patata');
-	});
+	})(req, res, next);
 };
