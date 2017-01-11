@@ -16,8 +16,7 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   path = require('path'),
-	passport = require('passport'),
-	FacebookStrategy = require('passport-facebook').Strategy;
+	passport = require('passport');
 
 module.exports = function (app, config) {
 
@@ -25,11 +24,11 @@ module.exports = function (app, config) {
   var authRouter = express.Router();
   var configRouter = express.Router();
   var getCustomerMiddleware = require('../middleware/get-customer');
+  var providerConfigurator = require('../middleware/provider-configurator');
 
   // -------- Controllers ------
   var authController = require('../controllers/auth');
   var configController = require('../controllers/config');
-  var facebookController = require('../controllers/facebook');
 
   // Require here your api controllers
 
@@ -47,26 +46,13 @@ module.exports = function (app, config) {
   authRouter.use(bodyParser.json());
   authRouter.use(getCustomerMiddleware);
 
-	passport.use('facebook', new FacebookStrategy({
-    clientID: "1903192596634073",
-    clientSecret: "4747d4007334bf030f35729ace0d2665",
-    callbackURL: "http://192.168.99.100:3000/facebook/callback?yip_id=patata"
-  },
-  function(accessToken, refreshToken, profile, done) {
-
-		winston.debug('Access token: %s', accessToken);
-		winston.debug('Refresh token: %s', refreshToken);
-		winston.debug('profile: %s', JSON.stringify(profile));
-
-		return done(null, accessToken, refreshToken, profile);
-  }));
-
+	authRouter.use(providerConfigurator);
 	authRouter.use(passport.initialize());
 	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/facebook/callback', timeout(5000), facebookController.callback);
-  authRouter.get('/facebook', timeout(5000), facebookController.authenticate);
+  authRouter.get('/facebook/callback', timeout(15000), authController.callback);
+  authRouter.get('/facebook', timeout(15000), authController.authenticate);
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());
@@ -98,9 +84,9 @@ module.exports = function (app, config) {
   app.use(haltOnTimedout);
 
   // Main router
+  app.use('/config', configRouter);
   app.use('/', router);
   app.use('/', authRouter);
-  app.use('/config', configRouter);
 
   app.use(haltOnTimedout);
 
@@ -115,17 +101,15 @@ module.exports = function (app, config) {
   // Error handling
   app.use(function (err, req, res, next) {
     // Timeout
-    if (err) {
-      winston.warn("[API ERROR] %s -- %s %s %s", req.ip, req.method, req.path, JSON.stringify(err));
+    if (err && err.status) {
+      winston.warn("[API ERROR] %s -- %s %s %s", req.ip, req.method, req.path, err);
       res.status(err.status).json({result: err.message});
     }
     // Unexpected exception handling
-    else if (err) {
+    else {
       var errorDesc = (err.stack) ? err.stack : JSON.stringify(err, null, '\t');
       winston.error("[API 500 ERROR] %s -- %s %s \n %s", req.ip, req.method, req.path, errorDesc);
       res.status(500).json(err);
-    } else {
-      res.status(500).json({result: 'Unknown error'});
     }
   });
 

@@ -6,12 +6,23 @@
 /*jshint -W030 */
 'use strict';
 
-/**
- * Get a specific Business Unit from catalog by id
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
- */
-exports.get = function (req, res) {
-  res.send();
+var winston = require('winston'),
+		passport = require('passport'),
+	  FacebookStrategy = require('passport-facebook').Strategy;
+
+
+exports.authenticate = function (req, res, next) {
+
+	winston.debug('facebook.authenticate');
+
+	passport.authenticate('facebook')(req, res, next);
+};
+
+exports.callback = function (req, res, next) {
+
+	winston.debug('facebook.callback');
+	passport.authenticate('facebook', function(err, user, info) {
+		winston.debug(arguments);
+		res.send('patata');
+	})(req, res, next);
 };
