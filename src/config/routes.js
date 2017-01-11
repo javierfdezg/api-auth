@@ -51,8 +51,8 @@ module.exports = function (app, config) {
 	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/facebook/callback', timeout(15000), authController.callback);
-  authRouter.get('/facebook', timeout(15000), authController.authenticate);
+  authRouter.get('/callback', timeout(15000), authController.callback);
+  authRouter.get('/', timeout(15000), authController.authenticate);
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());
