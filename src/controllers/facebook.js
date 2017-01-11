@@ -7,26 +7,20 @@
 'use strict';
 
 var winston = require('winston'),
-		passport = require('passport'),
-		FacebookStrategy = require('passport-facebook').Strategy;
+		passport = require('passport');
 
-exports.authenticate = function (req, res) {
+exports.authenticate = function (req, res, next) {
 
 	winston.debug('facebook.authenticate');
 
-	passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-//    User.findOrCreate(..., function(err, user) {
-//      if (err) { return done(err); }
-//      done(null, user);
-//    });
-  }));
+	passport.authenticate('facebook')(req, res, next);
 };
 
-exports.callback = function (req, res) {
-  res.send();
+exports.callback = function (req, res, next) {
+
+	winston.debug('facebook.callback');
+	passport.authenticate('facebook', function(err, user, info) {
+		winston.debug(arguments);
+		res.send('patata');
+	});
 };

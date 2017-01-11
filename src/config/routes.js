@@ -15,8 +15,9 @@ var express = require('express'),
   cors = require('cors'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
-  path = require('path')
-	passport = require('passport');
+  path = require('path'),
+	passport = require('passport'),
+	FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = function (app, config) {
 
@@ -46,12 +47,27 @@ module.exports = function (app, config) {
 
   authRouter.use(bodyParser.json());
   authRouter.use(getCustomerMiddleware);
+
+	passport.use('facebook', new FacebookStrategy({
+    clientID: "1903192596634073",
+    clientSecret: "4747d4007334bf030f35729ace0d2665",
+    callbackURL: "http://192.168.99.100:3000/facebook/callback?yip_id=patata"
+  },
+  function(accessToken, refreshToken, profile, done) {
+
+		winston.debug('Access token: %s', accessToken);
+		winston.debug('Refresh token: %s', refreshToken);
+		winston.debug('profile: %s', JSON.stringify(profile));
+
+		return done(null, accessToken, refreshToken, profile);
+  }));
+
 	authRouter.use(passport.initialize());
 	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/facebook/callback', timeout(5000), facebookController.callback);
-  authRouter.post('/facebook', timeout(5000), facebookController.authenticate);
+  authRouter.get('/facebook/callback', timeout(115000), facebookController.callback);
+  authRouter.get('/facebook', timeout(115000), facebookController.authenticate);
   // ----------------------------------------------------------------------
 
   configRouter.use(bodyParser.json());
@@ -78,15 +94,7 @@ module.exports = function (app, config) {
 
   // Set maximum lag and configure toobusy middleware
   toobusy.maxLag(config.maxLag);
-  app.use(function (req, res, next) {
-    // check if we're toobusy()
-    if (toobusy()) {
-      winston.warn('[API TOOBUSY ERROR] %s -- %s %s', req.ip, req.method, req.path);
-      res.status(503).json({result: 'Server too busy'});
-    } else {
-      next();
-    }
-  });
+
 
   app.use(haltOnTimedout);
 
