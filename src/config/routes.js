@@ -39,6 +39,9 @@ module.exports = function (app, config) {
   router.get('/elb-ping', timeout(5000), function (req, res) {
     res.json({result: 'ok'});
   });
+  router.get('/favicon.ico', timeout(5000), function (req, res) {
+    res.status(200).send();
+  });
 
   // Add X-Response-Time header (response time) in every response
   app.use(responseTime());
@@ -51,7 +54,7 @@ module.exports = function (app, config) {
 	authRouter.use(passport.session());
 
   // --------------------------- AUTH SERVICES ----------------------------
-  authRouter.get('/callback', timeout(15000), authController.callback);
+  authRouter.get('/return', timeout(15000), authController.callback);
   authRouter.get('/', timeout(15000), authController.authenticate);
   // ----------------------------------------------------------------------
 

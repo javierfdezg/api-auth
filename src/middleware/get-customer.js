@@ -14,6 +14,7 @@ function getCustomer (req, res, next) {
       message: 'Yip Id not found'
     };
 
+		winston.debug('%s', req.path);
 		winston.error('getCustomer middleware: %s', JSON.stringify(err));
   }
 

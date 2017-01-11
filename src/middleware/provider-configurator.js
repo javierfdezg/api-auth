@@ -4,7 +4,7 @@ var winston = require('winston'),
 		Config = require('../models/config'),
 		passport = require('passport'),
 	  FacebookStrategy = require('passport-facebook').Strategy,
-	  OpenIdStrategy = require('passport-openid').Strategy;
+	  OIDCStrategy = require('passport-openidconnect').Strategy;
 
 var strategyLoader = {};
 
@@ -27,6 +27,28 @@ strategyLoader.facebook = function (config, next) {
 		next();
 }
 
+strategyLoader.openidconnect = function (config, next) {
+
+		passport.use('openidconnect', new OIDCStrategy({
+			issuer: config.issuer,
+			authorizationURL: config.authorizationURL,
+			userInfoURL: config.userInfoURL,
+			tokenURL: config.tokenURL,
+			clientID: config.clientID,
+			clientSecret: config.clientSecret,
+			callbackURL: config.callbackURL
+		},
+		function(token, tokenSecret,  profile, done) {
+
+			winston.debug('token: %s', token);
+			winston.debug('tokenSecret: %s', tokenSecret);
+			winston.debug('profile: %s', JSON.stringify(profile));
+
+			return done(null, token, tokenSecret, profile);
+		}));
+
+		next();
+}
 function loadConfigurator (req, res, next) {
 
 	var customer = req.customer;
