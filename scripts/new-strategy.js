@@ -21,3 +21,9 @@ strategy.name = 'facebook';
 strategy.save().then(function () {
   console.log('facebook saved');
 });
+
+strategy = new Strategy();
+strategy.name = 'openidconnect';
+strategy.save().then(function () {
+  console.log('openidconnect saved');
+});
