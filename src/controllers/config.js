@@ -37,7 +37,23 @@ function put (req, res) {
 }
 
 function del (req, res) {
-  res.status(406).send('Not implemented');
+
+  Config.findByCustomer(req.customer).then(function (config) {
+
+		if (!config) {
+			return res.status(204).send();
+		}
+
+		config.remove(function (err) {
+
+			if (err) {
+				return res.status(500).json(err);
+			}
+
+			return res.status(204).send();
+
+		});
+	});
 }
 
 var configHandlers = {};
