@@ -36,10 +36,24 @@ function put (req, res) {
   res.status(406).send('Not implemented');
 }
 
-function del (req, res, next) {
-  Config.removeCustomer(req.customer).then (function () {
-    return res.status(204).send();
-  }).catch(next);
+function del (req, res) {
+
+  Config.findByCustomer(req.customer).then(function (config) {
+
+		if (!config) {
+			return res.status(204).send();
+		}
+
+		config.remove(function (err) {
+
+			if (err) {
+				return res.status(500).json(err);
+			}
+
+			return res.status(204).send();
+
+		});
+	});
 }
 
 var configHandlers = {};

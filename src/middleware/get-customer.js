@@ -6,8 +6,6 @@ function getCustomer (req, res, next) {
   var customer = req.header('yip_id') || req.query.yip_id;
   var err;
 
-  winston.debug('Running getCustomer middleware');
-
   if (!customer) {
     err = {
       status: 400,

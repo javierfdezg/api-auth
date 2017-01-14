@@ -49,29 +49,36 @@ strategyLoader.openidconnect = function (config, next) {
 
 		next();
 }
-
 function loadConfigurator (req, res, next) {
 
-  var customer = req.customer;
+	var customer = req.customer;
 
-  Config.findByCustomer(customer).then(function (config) {
-    var err = {
-      status: 400;
-    };
+	Config.findByCustomer(customer).then(function (config) {
 
-    if (!config) {
-      err.message = 'Configuration for provider not available';
-      return next(err);
-    }
+		if (!config) {
+			var	err = {
+				status: 400,
+				message: 'Configuration for provider not available'
+			};
 
-    var strategy = config.strategies[req.query.provider];
-    if (!strategy) {
-      err.message = 'Configuration for provider not available';
-      return next(err);
-    }
+			return next(err);
+		}
 
-    strategyLoader[req.query.provider.toLowerCase()](strategy.fields, next);
-  }).catch(next);
+		var strategy = config.strategies[req.query.provider];
+		if (!strategy) {
+			var	err = {
+				status: 400,
+				message: 'Provider not supported for this customer'
+			};
+
+			return next(err);
+		}
+
+		strategyLoader[req.query.provider.toLowerCase()](strategy, next);
+
+	}).catch(next);
+
+
 }
 
 module.exports = loadConfigurator;

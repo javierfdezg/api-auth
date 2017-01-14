@@ -19,8 +19,8 @@ var app, winston = require('winston'),
   mongoConnection = require('./config/mongo')(config.data),
   fs = require('fs');
 
-mongoose.Promise = Promise;
 
+mongoose.Promise = Promise;
 mongoose.connect(mongoConnection);
 
 app = express();

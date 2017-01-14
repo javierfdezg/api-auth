@@ -1,7 +1,3 @@
-/*
- * Copyright (c)
- */
-
 /*jslint node: true */
 /*jshint -W030 */
 "use strict";
@@ -16,7 +12,20 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   path = require('path'),
-	passport = require('passport');
+	passport = require('passport'),
+	swaggerJSDoc = require('swagger-jsdoc');
+
+var swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'SSO Service',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/config/routes.js']
+};
+
+var swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 module.exports = function (app, config) {
 
@@ -34,14 +43,31 @@ module.exports = function (app, config) {
 
   // -------- Routes --------
 
-  // Amazon elb health check. This always return 200 status code because we are not using this
-  // to manage the auto launching.
+	/**
+	* @swagger
+	* /elb-ping:
+	*   get:
+	*     description: Enpoint for ELB health check
+	*     produces:
+	*       - application/json
+	*     responses:
+	*       200:
+	*         description: login
+	*/
   router.get('/elb-ping', timeout(5000), function (req, res) {
     res.json({result: 'ok'});
   });
+
   router.get('/favicon.ico', timeout(5000), function (req, res) {
     res.status(200).send();
   });
+
+	router.get('/api-docs.json', function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
+		res.send(swaggerSpec);
+	});
+
+	router.use(express.static('public', {'index': ['index.html']}));
 
   // Add X-Response-Time header (response time) in every response
   app.use(responseTime());
@@ -62,9 +88,88 @@ module.exports = function (app, config) {
   configRouter.use(getCustomerMiddleware);
 
   // --------------------------- CONFIG SERVICES ----------------------------
+	/**
+	* @swagger
+	* /config:
+	*   get:
+	*     description: Retrieve the SSO configuration for a customer
+	*     produces:
+	*       - application/json
+	*     parameters:
+	*       - name: yip_id
+	*         in: query
+	*         description:  Yip id
+	*         required: true
+	*         type: string
+	*     responses:
+	*       '200':
+	*         description: The customers' configuration.
+	*       '400':
+	*         description: The yip_id not provided
+	*       '404':
+	*         description: Configuration not found
+	*/
   configRouter.get('/', timeout(5000), configController.get);
+
+	/**
+	* @swagger
+	* /config:
+	*   post:
+	*     description: Creates a SSO configuration for a customer
+	*     produces:
+	*       - application/json
+	*     parameters:
+	*       - name: yip_id
+	*         in: query
+	*         description:  Yip id
+	*         required: true
+	*         type: string
+	*     responses:
+	*       '201':
+	*         description: Customer configuration created successfully
+	*       '400':
+	*         description: The yip_id not provided or the configuration already existed
+	*/
   configRouter.post('/', timeout(5000), configController.post);
+
+	/**
+	* @swagger
+	* /config:
+	*   put:
+	*     description: Updates the SSO configuration for a customer
+	*     produces:
+	*       - application/json
+	*     parameters:
+	*       - name: yip_id
+	*         in: query
+	*         description:  Yip id
+	*         required: true
+	*         type: string
+	*     responses:
+	*       '406':
+	*         description: Not implemented
+	*/
   configRouter.put('/', timeout(5000), configController.put);
+
+	/**
+	* @swagger
+	* /config:
+	*   delete:
+	*     description: Deletes the SSO configuration for a customer
+	*     produces:
+	*       - application/json
+	*     parameters:
+	*       - name: yip_id
+	*         in: query
+	*         description:  Yip id
+	*         required: true
+	*         type: string
+	*     responses:
+	*       '204':
+	*         description: SSO Configuration deleted successfully
+	*       '400':
+	*         description: yip_id not provided
+	*/
   configRouter['delete']('/', timeout(5000), configController.del);
   // ----------------------------------------------------------------------
 
@@ -87,9 +192,9 @@ module.exports = function (app, config) {
   app.use(haltOnTimedout);
 
   // Main router
-  app.use('/config', configRouter);
   app.use('/', router);
-  app.use('/', authRouter);
+  app.use('/config', configRouter);
+  app.use('/auth', authRouter);
 
   app.use(haltOnTimedout);
 

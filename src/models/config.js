@@ -24,12 +24,6 @@ function findByCustomer (customer) {
   });
 }
 
-function removeCustomer (customer) {
-  return this.remove({
-    yip_id: customer
-  });
-}
-
 ConfigSchema.statics.validateStrategies = validateStrategies;
 ConfigSchema.statics.findByCustomer = findByCustomer;
 
