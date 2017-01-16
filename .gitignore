@@ -1,5 +1,7 @@
 dmconfig.json
 node_modules
-src/npm-debug.log 
+src/npm-debug.log
 deploy-versions/*
 log
+public/*
+!public/.gitkeep
