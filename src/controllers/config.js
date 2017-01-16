@@ -30,7 +30,7 @@ function put (req, res) {
   res.status(406).send('Not implemented');
 }
 
-function del (req, res) {
+function del (req, res, next){
   Config.findByCustomer(req.customer).then(function (config) {
     if (!config) {
       return res.status(204).json();
