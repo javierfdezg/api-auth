@@ -17,13 +17,53 @@ mongoose.Promise = Promise;
 mongoose.connect(mongoConnection);
 
 var strategy = new Strategy();
-strategy.name = 'facebook';
+strategy.provider = 'facebook';
+strategy.fields = [
+  {
+    name: 'callbackURL',
+    type: 'String'
+  },
+  {
+    name: 'clientSecret',
+    type: 'String'
+  },
+  {
+    name: 'clientID',
+    type: 'String'
+  }
+];
 strategy.save().then(function () {
   console.log('facebook saved');
 });
 
 strategy = new Strategy();
-strategy.name = 'openidconnect';
+strategy.provider = 'openidconnect';
+strategy.fields = [
+  {
+    name: 'callbackURL',
+    type: 'String'
+  },
+  {
+    name: 'clientSecret',
+    type: 'String'
+  },
+  {
+    name: 'clientID',
+    type: 'String'
+  },
+  {
+    name: 'tokenURL',
+    type: 'String'
+  },
+  {
+    name: 'userInfoURL',
+    type: 'authorizationURL'
+  },
+  {
+    name: 'issuer',
+    type: 'String'
+  }
+];
 strategy.save().then(function () {
   console.log('openidconnect saved');
 });

@@ -25,6 +25,7 @@ module.exports = function (app, config) {
 
   var router = express.Router();
   var authRouter = require('../routes/auth');
+  var strategiesRouter = require('../routes/strategy');
   var configRouter = require('../routes/config');
 
   // Require here your api controllers
@@ -70,6 +71,7 @@ module.exports = function (app, config) {
   app.use(haltOnTimedout);
 
   app.use('/', router);
+  app.use('/strategies', strategiesRouter);
   app.use('/config', configRouter);
   app.use('/auth', authRouter);
 

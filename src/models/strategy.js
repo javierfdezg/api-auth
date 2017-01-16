@@ -4,13 +4,13 @@ var mongoose = require('mongoose');
 var Promise = require('bluebird');
 
 var StrategySchema = new mongoose.Schema({
-  name: {type: String, required: true},
+  provider: {type: String, required: true, unique: true},
   fields: []
 });
 
 function exist (strategies) {
   return this.find({
-    name: {
+    provider: {
       $in: strategies
     }
   }, {
