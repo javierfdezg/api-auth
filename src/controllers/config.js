@@ -1,9 +1,3 @@
-/*
- * Copyright (c) inSided BV
- */
-
-/*jslint node: true */
-/*jshint -W030 */
 'use strict';
 
 var Config = require('../models/config');
@@ -37,23 +31,14 @@ function put (req, res) {
 }
 
 function del (req, res) {
-
   Config.findByCustomer(req.customer).then(function (config) {
-
-		if (!config) {
-			return res.status(204).send();
-		}
-
-		config.remove(function (err) {
-
-			if (err) {
-				return res.status(500).json(err);
-			}
-
-			return res.status(204).send();
-
-		});
-	});
+    if (!config) {
+      return res.status(204).json();
+    }
+    config.remove().then(function () {
+      return res.status(204).json();
+    }).catch(next);
+  });
 }
 
 var configHandlers = {};

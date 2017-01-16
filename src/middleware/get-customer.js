@@ -5,19 +5,16 @@ var winston = require('winston');
 function getCustomer (req, res, next) {
   var customer = req.header('yip_id') || req.query.yip_id;
   var err;
-
   if (!customer) {
     err = {
       status: 400,
       message: 'Yip Id not found'
     };
 
-		winston.debug('%s', req.path);
-		winston.error('getCustomer middleware: %s', JSON.stringify(err));
+    winston.debug('%s', req.path);
+    winston.error('getCustomer middleware: %s', JSON.stringify(err));
   }
-
   req.customer = customer;
-
   next(err);
 }
 

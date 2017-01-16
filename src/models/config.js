@@ -10,8 +10,14 @@ var ConfigSchema = new mongoose.Schema({
   strategies: {}
 });
 
+function getProviders (strategies) {
+  return strategies.map(function (strategy) {
+    return strategy.provider;
+  });
+}
+
 function validateStrategies (strategies) {
-  return Strategy.exist(Object.keys(strategies)).then(function () {
+  return Strategy.exist(getProviders(strategies)).then(function () {
     return strategies;
   }).catch(function (err) {
     return Promise.reject(err);

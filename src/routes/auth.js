@@ -1,22 +1,24 @@
 'use strict';
 
 var express = require('express');
+var passport = require('passport');
 var bodyParser = require('body-parser');
+var timeout = require('connect-timeout');
 
-var authController = require('../controller/auth');
+var authController = require('../controllers/auth');
 
 var getCustomerMiddleware = require('../middleware/get-customer');
 var providerConfigurator = require('../middleware/provider-configurator');
 
-var router = express.Router();
+var authRouter = express.Router();
 
-router.use(bodyParser.json());
-router.use(getCustomerMiddleware);
-router.use(providerConfigurator);
-router.use(passport.initialize());
-router.use(passport.session());
+authRouter.use(bodyParser.json());
+authRouter.use(getCustomerMiddleware);
+authRouter.use(providerConfigurator);
+authRouter.use(passport.initialize());
+authRouter.use(passport.session());
 
-router.get('/return', timeout(15000), authController.callback);
-router.get('/', timeout(15000), authController.authenticate);
+authRouter.get('/return', timeout(15000), authController.callback);
+authRouter.get('/', timeout(15000), authController.authenticate);
 
-module.exports = router;
+module.exports = authRouter;
