@@ -55,18 +55,6 @@ module.exports = function (grunt) {
 
     shell: {
       // Change this command to whatever command you want to run in parallel to node server
-      elasticsearch: {
-        command: 'elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml',
-        options: {
-          async: true
-        }
-      },
-      test: {
-        command: 'mocha --opts test/mocha.opts test',
-      },
-      createUser: {
-        command: 'node scripts/add-user.js -c "<%= config.createUser %>" -n "<%= config.user.fullName %>" -p "<%= config.user.password %>" -e "<%= config.user.email %>"'
-      },
       ebGetLastVersion: {
         command: 'echo `git fetch && git tag | sort -t. -k1,1n -k2,2n -k 3,3n | tail -1` > version',
         options: {
