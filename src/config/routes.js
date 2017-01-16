@@ -5,6 +5,7 @@ var winston = require('winston');
 var timeout = require('connect-timeout');
 var toobusy = require('toobusy-js');
 var responseTime = require('response-time');
+var cors = require('cors');
 var path = require('path');
 var swaggerJSDoc = require('swagger-jsdoc');
 
@@ -27,9 +28,7 @@ module.exports = function (app, config) {
   var strategiesRouter = require('../routes/strategy');
   var configRouter = require('../routes/config');
 
-  // Require here your api controllers
-
-  // -------- Routes --------
+  app.use(express.static('public', {'index': ['index.html']}));
 
 	/**
 	* @swagger
@@ -55,9 +54,11 @@ module.exports = function (app, config) {
 	// 	res.send(swaggerSpec);
 	// });
 
-	app.use(express.static('public', {'index': ['index.html']}));
-
   app.use(responseTime());
+
+  app.use(haltOnTimedout);
+
+  app.use(cors());
 
   app.use(haltOnTimedout);
 
