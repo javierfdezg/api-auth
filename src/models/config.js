@@ -8,7 +8,7 @@ var Strategy = require('../models/strategy');
 var DEFAULT_FIELD_TYPE = 'String';
 
 var ConfigSchema = new mongoose.Schema({
-  yip_id: {type: String, required: true, unique: true},
+  customer: {type: String, required: true, unique: true},
   strategies: {}
 });
 
@@ -28,7 +28,7 @@ function validateStrategies (strategies) {
 
 function findByCustomer (customer) {
   return this.findOne({
-    yip_id: customer
+    customer: customer
   });
 }
 

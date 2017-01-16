@@ -15,7 +15,7 @@ function post (req, res, next) {
   var customer = req.customer;
   var strategies = req.body.strategies;
   var config = new Config();
-  config.yip_id = customer;
+  config.customer = customer;
   Config.validateStrategies(strategies).then(function (strategies) {
     config.strategies = strategies;
     return config.save();
