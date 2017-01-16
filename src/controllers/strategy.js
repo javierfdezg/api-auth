@@ -11,9 +11,9 @@ function get (req, res, next) {
     if (!customer) {
       return res.json(strategies);
     }
-    return Config.mergeCustomerStrategies(customer, strategies);
-  }).then(function (strategies) {
-    return res.json(strategies);
+    return Config.mergeCustomerStrategies(customer, strategies).then(function (strategies) {
+      return res.json(strategies);
+    });
   }).catch(next);
 }
 
