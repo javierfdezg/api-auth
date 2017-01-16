@@ -5,7 +5,6 @@ var winston = require('winston');
 var timeout = require('connect-timeout');
 var toobusy = require('toobusy-js');
 var responseTime = require('response-time');
-var cors = require('cors');
 var path = require('path');
 var swaggerJSDoc = require('swagger-jsdoc');
 
@@ -59,10 +58,6 @@ module.exports = function (app, config) {
 	app.use(express.static('public', {'index': ['index.html']}));
 
   app.use(responseTime());
-
-  app.use(haltOnTimedout);
-
-  app.use(cors());
 
   app.use(haltOnTimedout);
 
