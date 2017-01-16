@@ -1,0 +1,126 @@
+{
+	"variables": [],
+	"info": {
+		"name": "api-auth PRODUCTION",
+		"_postman_id": "e1e74199-4541-57e8-79ed-bac78cb7060e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ELB Ping",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/elb-ping",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get config",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": {\n\t\t\"facebook\": {\n\t\t\t\"fields\": {\n\t\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/facebook/callback?yip_id=patata\"\n\t\t\t}\n\t\t}\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Set config",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/return?yip_id=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/return?yip_id=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete config",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get strategies",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get customer strategies",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies?yip_id=patata",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all strategies",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Insert default strategies",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
