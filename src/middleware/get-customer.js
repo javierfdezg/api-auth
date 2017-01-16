@@ -3,7 +3,7 @@
 var winston = require('winston');
 
 function getCustomer (req, res, next) {
-  var customer = req.header('yip_id') || req.query.yip_id;
+  var customer = req.header('customer') || req.query.customer;
   var err;
   if (!customer) {
     err = {
