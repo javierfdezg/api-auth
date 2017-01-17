@@ -36,6 +36,7 @@ configRouter.use(getCustomerMiddleware);
 */
 configRouter.get('/', timeout(5000), configController.get);
 
+configRouter.post('/:provider', timeout(5000), configController.postProvider);
 /**
 * @swagger
 * /config:
@@ -50,7 +51,7 @@ configRouter.get('/', timeout(5000), configController.get);
 *         required: true
 *         type: string
 *     responses:
-*       '201':
+*       '200':
 *         description: Customer configuration created successfully
 *       '400':
 *         description: The customer not provided or the configuration already existed
@@ -75,6 +76,8 @@ configRouter.post('/', timeout(5000), configController.post);
 *         description: Not implemented
 */
 configRouter.put('/', timeout(5000), configController.put);
+
+configRouter.put('/:provider', timeout(5000), configController.putProvider);
 
 /**
 * @swagger

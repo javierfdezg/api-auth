@@ -1,158 +1,206 @@
 {
-	"id": "62c49695-a959-1997-f877-696fcd252631",
-	"name": "api-auth",
-	"description": "",
-	"order": [
-		"2fd6cf52-affa-15b9-6c78-99028911b114",
-		"da152a46-c412-c83a-3c18-13109cd80ca3",
-		"9be488fc-0b2d-f453-5002-b32730a36bfd",
-		"4c28a282-e66c-5b6f-d82a-893bdd236a95",
-		"da23bb91-2b70-ce7d-9239-7081854bcdee",
-		"8e87f0c5-e97b-4e55-c4ba-d0c00cd0b9f5",
-		"1bae7b9e-08e1-a922-928c-9adaf7cfc22c",
-		"05d0bb20-6ea8-08dc-6969-416878a0c4ec"
-	],
-	"folders": [],
-	"timestamp": 0,
-	"owner": "881249",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "api-auth",
+		"_postman_id": "68e31730-4fdf-1268-64a7-782522103bdb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "05d0bb20-6ea8-08dc-6969-416878a0c4ec",
-			"headers": "",
-			"url": "http://192.168.99.100:3000/strategies",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "POST",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"data": null,
-			"dataMode": "params",
-			"name": "Insert default strategies",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1484576539997,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "1bae7b9e-08e1-a922-928c-9adaf7cfc22c",
-			"headers": "",
-			"url": "http://192.168.99.100:3000/strategies",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "DELETE",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"data": null,
-			"dataMode": "params",
-			"name": "Delete all strategies",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1484576516580,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "2fd6cf52-affa-15b9-6c78-99028911b114",
-			"headers": "",
-			"url": "http://192.168.99.100:3000/elb-ping",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "GET",
-			"data": [],
-			"dataMode": "params",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1484563045016,
 			"name": "ELB Ping",
-			"description": "",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"responses": []
+			"request": {
+				"url": "http://192.168.99.100:3000/elb-ping",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "4c28a282-e66c-5b6f-d82a-893bdd236a95",
-			"name": "Delete config",
-			"description": "",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"method": "DELETE",
-			"headers": "Content-Type: application/json",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "",
-			"url": "http://192.168.99.100:3000/config?yip_id=patata",
-			"responses": []
-		},
-		{
-			"id": "8e87f0c5-e97b-4e55-c4ba-d0c00cd0b9f5",
-			"headers": "",
-			"url": "http://192.168.99.100:3000/strategies?yip_id=patata",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"data": null,
-			"dataMode": "params",
-			"name": "Get customer strategies",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1484567772075,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "9be488fc-0b2d-f453-5002-b32730a36bfd",
-			"name": "Set config",
-			"description": "",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"method": "POST",
-			"headers": "Content-Type: application/json",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/return?yip_id=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/return?yip_id=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}",
-			"url": "http://192.168.99.100:3000/config?yip_id=patata",
-			"responses": []
-		},
-		{
-			"id": "da152a46-c412-c83a-3c18-13109cd80ca3",
 			"name": "Get config",
-			"description": "",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"method": "GET",
-			"headers": "Content-Type: application/json",
-			"dataMode": "raw",
-			"data": [],
-			"rawModeData": "{\n\t\"strategies\": {\n\t\t\"facebook\": {\n\t\t\t\"fields\": {\n\t\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/facebook/callback?yip_id=patata\"\n\t\t\t}\n\t\t}\n\t}\n}",
-			"url": "http://192.168.99.100:3000/config?yip_id=patata",
-			"responses": []
+			"request": {
+				"url": "http://192.168.99.100:3000/config?customer=patata",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": {\n\t\t\"facebook\": {\n\t\t\t\"fields\": {\n\t\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/facebook/callback?yip_id=patata\"\n\t\t\t}\n\t\t}\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "da23bb91-2b70-ce7d-9239-7081854bcdee",
-			"headers": "",
-			"url": "http://192.168.99.100:3000/strategies",
-			"pathVariables": {},
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "62c49695-a959-1997-f877-696fcd252631",
-			"data": null,
-			"dataMode": "params",
+			"name": "Set config",
+			"request": {
+				"url": "http://192.168.99.100:3000/config",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update config",
+			"request": {
+				"url": "http://192.168.99.100:3000/config",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete config",
+			"request": {
+				"url": "http://192.168.99.100:3000/config?customer=patata",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Get strategies",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1484567596147,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
+			"request": {
+				"url": "http://192.168.99.100:3000/strategies",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get customer strategies",
+			"request": {
+				"url": "http://192.168.99.100:3000/strategies?customer=patata",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete all strategies",
+			"request": {
+				"url": "http://192.168.99.100:3000/strategies",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Insert default strategies",
+			"request": {
+				"url": "http://192.168.99.100:3000/strategies",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Set config single provider",
+			"request": {
+				"url": "http://192.168.99.100:3000/config/facebook",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Set config single provider",
+			"request": {
+				"url": "http://192.168.99.100:3000/config/facebook",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
