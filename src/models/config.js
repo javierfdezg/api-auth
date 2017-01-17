@@ -8,7 +8,7 @@ var Strategy = require('../models/strategy');
 var DEFAULT_FIELD_TYPE = 'String';
 
 var ConfigSchema = new mongoose.Schema({
-  yip_id: {type: String, required: true, unique: true},
+  customer: {type: String, required: true, unique: true},
   strategies: {}
 });
 
@@ -28,7 +28,7 @@ function validateStrategies (strategies) {
 
 function findByCustomer (customer) {
   return this.findOne({
-    yip_id: customer
+    customer: customer
   });
 }
 
@@ -43,7 +43,7 @@ function mergeCustomerStrategies (customer, strategies) {
       configuredStrategies[strategy.provider] = strategy.config;
     }
     for (var i = 0, l = strategies.length; i < l; i++) {
-      var strategy = strategies[i];
+      var strategy = strategies[i].toObject();
       var configuredStrategy = configuredStrategies[strategy.provider];
       var mergedFields = strategy.fields.map(function (field) {
         return {
@@ -53,6 +53,8 @@ function mergeCustomerStrategies (customer, strategies) {
         };
       });
       strategy.fields = mergedFields;
+      strategy.active = true;
+      strategies[i] = strategy;
     }
     return strategies;
   });

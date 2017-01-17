@@ -21,7 +21,7 @@ configRouter.use(getCustomerMiddleware);
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: yip_id
+*       - name: customer
 *         in: query
 *         description:  Yip id
 *         required: true
@@ -30,7 +30,7 @@ configRouter.use(getCustomerMiddleware);
 *       '200':
 *         description: The customers' configuration.
 *       '400':
-*         description: The yip_id not provided
+*         description: The customer not provided
 *       '404':
 *         description: Configuration not found
 */
@@ -44,7 +44,7 @@ configRouter.get('/', timeout(5000), configController.get);
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: yip_id
+*       - name: customer
 *         in: query
 *         description:  Yip id
 *         required: true
@@ -53,7 +53,7 @@ configRouter.get('/', timeout(5000), configController.get);
 *       '201':
 *         description: Customer configuration created successfully
 *       '400':
-*         description: The yip_id not provided or the configuration already existed
+*         description: The customer not provided or the configuration already existed
 */
 configRouter.post('/', timeout(5000), configController.post);
 
@@ -65,7 +65,7 @@ configRouter.post('/', timeout(5000), configController.post);
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: yip_id
+*       - name: customer
 *         in: query
 *         description:  Yip id
 *         required: true
@@ -84,7 +84,7 @@ configRouter.put('/', timeout(5000), configController.put);
 *     produces:
 *       - application/json
 *     parameters:
-*       - name: yip_id
+*       - name: customer
 *         in: query
 *         description:  Yip id
 *         required: true
@@ -93,7 +93,7 @@ configRouter.put('/', timeout(5000), configController.put);
 *       '204':
 *         description: SSO Configuration deleted successfully
 *       '400':
-*         description: yip_id not provided
+*         description: customer not provided
 */
 configRouter['delete']('/', timeout(5000), configController.del);
 
