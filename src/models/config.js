@@ -46,11 +46,14 @@ function mergeCustomerStrategies (customer, strategies) {
       var strategy = strategies[i].toObject();
       var configuredStrategy = configuredStrategies[strategy.provider];
       var mergedFields = strategy.fields.map(function (field) {
-        return {
+        var mergedField = {
           name: field.name,
           type: field.type || DEFAULT_FIELD_TYPE,
-          value: configuredStrategy[field.name]
         };
+        if (configuredStrategy) {
+          mergedField.value = configuredStrategy[field.name];
+        }
+        return mergedField;
       });
       strategy.fields = mergedFields;
       strategy.active = true;
