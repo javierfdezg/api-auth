@@ -54,12 +54,14 @@ function loadConfigurator (req, res, next) {
       return next(err);
     }
     provider = req.query.provider.toLowerCase();
-    strategy = config.strategies[provider];
+    strategy = config.strategies.filter(function (strategy) {
+      return strategy.provider === provider;
+    })[0];
     if (!strategy) {
       err.message = 'Provider not supported for this customer';
       return next(err);
     }
-    strategyLoader[provider](strategy, next);
+    strategyLoader[provider](strategy.config, next);
   }).catch(next);
 }
 

@@ -32,7 +32,7 @@ module.exports = function (grunt) {
     concurrent: {
       dev: {
         // Change shell:elasticsearch task to whatever task you want to run in parallel to node server
-        tasks: ['nodemon:dev', 'shell:elasticsearch'],
+        tasks: ['nodemon:dev'],
         options: {
           logConcurrentOutput: true
         },
