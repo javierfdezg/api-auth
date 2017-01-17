@@ -14,20 +14,17 @@ function get (req, res, next) {
 function post (req, res, next) {
   var customer = req.customer;
   var strategies = req.body.strategies;
-  var config = new Config();
-  config.customer = customer;
   Config.validateStrategies(strategies).then(function (strategies) {
-    config.strategies = strategies;
-    return config.save();
-  }).then(function (config) {
-    res.json(config);
-  }).catch(function (err) {
-    res.status(400).json(err);
-  });
+    Config.update({customer: customer},{'$set': {
+      'strategies': strategies
+    }}, {upsert: true}).then(function() {
+      return res.json(strategies);
+    });
+  }).catch(next);
 }
 
-function put (req, res) {
-  res.status(406).send('Not implemented');
+function put (req, res, next) {
+  post(req, res, next);
 }
 
 function del (req, res, next){
