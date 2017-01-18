@@ -8,15 +8,8 @@ function updateConfig (req) {
     provider: req.params.provider,
     config: req.body.config
   };
-
   return Config.validateStrategy(strategy).then(function (strategy) {
-    return Config.update({customer: customer, 'strategies.provider': req.params.provider}, {
-      '$set': {
-        'strategies.$': strategy
-      }
-    }, {
-      upsert: true
-    });
+    return Config.createOrUpdateOne(customer, strategy);
   });
 }
 
@@ -24,7 +17,9 @@ function updateConfigs (req) {
   var customer = req.customer;
   var strategies = req.body.strategies;
   return Config.validateStrategies(strategies).then(function (strategies) {
-    return Config.update({customer: customer}, {
+    return Config.update({
+      'customer': customer
+    }, {
       '$set': {
         'strategies': strategies
       }
