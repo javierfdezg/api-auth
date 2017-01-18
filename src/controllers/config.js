@@ -2,6 +2,38 @@
 
 var Config = require('../models/config');
 
+function updateConfig (req) {
+  var customer = req.customer;
+  var strategy = {
+    provider: req.params.provider,
+    config: req.body.config
+  };
+
+  return Config.validateStrategy(strategy).then(function (strategy) {
+    return Config.update({customer: customer, 'strategies.provider': req.params.provider}, {
+      '$set': {
+        'strategies.$': strategy
+      }
+    }, {
+      upsert: true
+    });
+  });
+}
+
+function updateConfigs (req) {
+  var customer = req.customer;
+  var strategies = req.body.strategies;
+  return Config.validateStrategies(strategies).then(function (strategies) {
+    return Config.update({customer: customer}, {
+      '$set': {
+        'strategies': strategies
+      }
+    }, {
+      upsert: true
+    });
+  });
+}
+
 function get (req, res, next) {
   Config.findByCustomer(req.customer).then(function (config) {
     if (!config) {
@@ -12,64 +44,26 @@ function get (req, res, next) {
 }
 
 function post (req, res, next) {
-  var customer = req.customer;
-  var strategies = req.body.strategies;
-  var config = new Config();
-  config.customer = customer;
-  Config.validateStrategies(strategies).then(function (strategies) {
-    config.strategies = strategies;
-    return config.save();
-  }).then(function (config) {
-    res.status(200).json(config);
-  }).catch(function (err) {
-    res.status(400).json(err);
-  });
+  updateConfigs(req).then(function() {
+    return res.status(204).json();
+  }).catch(next);
 }
 
 function postProvider (req, res, next) {
-  var customer = req.customer;
-  var strategies = [{
-    provider: req.params.provider,
-    config: req.body.config
-  }];
-
-  var config = new Config();
-  Config.validateStrategies(strategies).then(function (strategies) {
-    config.customer = customer;
-    config.strategies = strategies;
-    return config.save();
-  }).then(function (config) {
-    res.status(200).json(config);
-  }).catch(function (err) {
-    res.status(400).json(err);
-  });
+  updateConfig(req).then(function() {
+    return res.status(204).json();
+  }).catch(next);
 }
 
 function put (req, res, next) {
-  var customer = req.customer;
-  var strategies = req.body.strategies;
-  Config.validateStrategies(strategies).then(function (strategies) {
-    Config.update({customer: customer},{'$set': {
-      'strategies': strategies
-    }}, {upsert: true}).then(function() {
-      return res.status(204).json(strategies);
-    });
+  updateConfigs(req).then(function() {
+    return res.status(204).json();
   }).catch(next);
 }
 
 function putProvider (req, res, next) {
-  var customer = req.customer;
-  var strategies = [{
-    provider: req.params.provider,
-    config: req.body.config
-  }];
-
-  Config.validateStrategies(strategies).then(function (strategies) {
-    Config.update({customer: customer, 'strategies.provider': req.params.provider},{'$set': {
-      'strategies.$': strategies[0]
-    }}).then(function() {
-      return res.status(204).send();
-    });
+  updateConfig(req).then(function() {
+    return res.status(204).json();
   }).catch(next);
 }
 

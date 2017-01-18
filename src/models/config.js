@@ -18,6 +18,14 @@ function getProviders (strategies) {
   });
 }
 
+function validateStrategy (strategy) {
+  return Strategy.exist([strategy.provider]).then(function () {
+    return strategy;
+  }).catch(function (err) {
+    return Promise.reject(err);
+  });
+}
+
 function validateStrategies (strategies) {
   return Strategy.exist(getProviders(strategies)).then(function () {
     return strategies;
@@ -63,6 +71,7 @@ function mergeCustomerStrategies (customer, strategies) {
   });
 }
 
+ConfigSchema.statics.validateStrategy = validateStrategy;
 ConfigSchema.statics.validateStrategies = validateStrategies;
 ConfigSchema.statics.findByCustomer = findByCustomer;
 ConfigSchema.statics.mergeCustomerStrategies = mergeCustomerStrategies;
