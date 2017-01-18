@@ -40,6 +40,26 @@ function findByCustomer (customer) {
   });
 }
 
+function createOrUpdateOne (customer, strategy) {
+  var Config = this;
+  return this.findByCustomer(customer).then(function (config) {
+    if (!config) {
+      return new Config({
+        customer: customer,
+        strategies: [strategy]
+      }).save()
+    }
+    return Config.update({
+      'customer': customer,
+      'strategies.provider': strategy.provider
+    }, {
+      '$set': {
+        'strategies.$': strategy
+      }
+    });
+  });
+}
+
 function mergeCustomerStrategies (customer, strategies) {
   return this.findByCustomer(customer).then(function (config) {
     if (!config) {
@@ -74,6 +94,7 @@ function mergeCustomerStrategies (customer, strategies) {
 ConfigSchema.statics.validateStrategy = validateStrategy;
 ConfigSchema.statics.validateStrategies = validateStrategies;
 ConfigSchema.statics.findByCustomer = findByCustomer;
+ConfigSchema.statics.createOrUpdateOne = createOrUpdateOne;
 ConfigSchema.statics.mergeCustomerStrategies = mergeCustomerStrategies;
 
 module.exports = mongoose.model('Config', ConfigSchema);
