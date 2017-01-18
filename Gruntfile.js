@@ -209,6 +209,9 @@ module.exports = function (grunt) {
   // Default task
   grunt.registerTask('default', ['external_daemon:mongodb', 'concurrent:dev']);
 
+  grunt.registerTask('nodata', ['concurrent:dev']);
+
+
   // Test
   grunt.registerTask('test', ['shell:test']);
 

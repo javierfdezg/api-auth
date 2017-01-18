@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "api-auth PRODUCTION",
-		"_postman_id": "e1e74199-4541-57e8-79ed-bac78cb7060e",
+		"_postman_id": "d83d745e-3aa9-4ff9-bc34-b9742c406fff",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -21,7 +21,7 @@
 		{
 			"name": "Get config",
 			"request": {
-				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?customer=patata",
 				"method": "GET",
 				"header": [
 					{
@@ -41,18 +41,48 @@
 		{
 			"name": "Set config",
 			"request": {
-				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"value": "application/json",
 						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/return?yip_id=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/return?yip_id=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
+					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update config",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"strategies\": [{\n\t\t\"provider\": \"facebook\",\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://192.168.99.100:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n\t}, {\n\t\t\"provider\": \"openidconnect\",\n\t\t\"config\": {\n\t\t\t\"issuer\": \"https://accounts.google.com\",\n    \t \t\"authorizationURL\": \"https://accounts.google.com/o/oauth2/v2/auth\",\n        \t\"userInfoURL\": \"https://www.googleapis.com/oauth2/v3/userinfo\",\n        \t\"tokenURL\": \"https://www.googleapis.com/oauth2/v4/token\",\n        \t\"clientID\": \"385370904613-3gkn8rc9233sqoklggvrkmmof5ob9g3b.apps.googleusercontent.com\",\n        \t\"clientSecret\": \"_L2QdZuPt2sXqO9WUekH3rBF\",\n        \t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=openidconnect\"\n\t\t}\n\t}]\n}"
 				},
 				"description": ""
 			},
@@ -61,7 +91,7 @@
 		{
 			"name": "Delete config",
 			"request": {
-				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?yip_id=patata",
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config?customer=patata",
 				"method": "DELETE",
 				"header": [
 					{
@@ -92,7 +122,7 @@
 		{
 			"name": "Get customer strategies",
 			"request": {
-				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies?yip_id=patata",
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/strategies?customer=patata",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -118,6 +148,56 @@
 				"method": "POST",
 				"header": [],
 				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Set config single provider",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/config/facebook",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Set config single provider",
+			"request": {
+				"url": "http://lowcost-env.patiknyyku.eu-west-1.elasticbeanstalk.com/facebook",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "customer",
+						"value": "patata",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"config\": {\n\t\t\t\"clientID\": \"1903192596634073\",\n\t\t\t\"clientSecret\": \"4747d4007334bf030f35729ace0d2665\",\n\t\t\t\"callbackURL\": \"http://example.com:3000/auth/return?customer=patata&provider=facebook\"\n\t\t}\n}"
+				},
 				"description": ""
 			},
 			"response": []
